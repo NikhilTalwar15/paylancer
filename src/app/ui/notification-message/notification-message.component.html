@@ -1,0 +1,10 @@
+<div *ngIf="notify.msg | async as msg" class="notification"
+  [ngClass]="{ 
+    'is-danger': msg.style == 'error',
+    'newMessage': msg.style == 'success',
+    'is-info': msg.style == 'info'
+  }" [routerLink]="'/econtract/'+ msg.cid" (click)="notify.clear()">
+  <button class="delete" (click)="notify.clear()"></button>
+ <h3>{{ msg.title }} </h3> 
+ <h4>{{ msg.body }}</h4> 
+</div>

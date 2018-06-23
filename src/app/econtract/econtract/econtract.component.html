@@ -1,0 +1,491 @@
+<div class="modal flex jc ac" *ngIf="loading || loading2 || paypalLoad">
+  <div class="spinner">
+    <div class="cube1"></div>
+    <div class="cube2"></div>
+  </div>
+</div>
+<div class="modal flex jc ac col wrap" *ngIf="confirmPage">
+  <div class="confirmPage flex col jc ac">
+        <div class="close flex jc ac" (click)="confirmPage = false">
+            <span><</span>
+          </div>
+        <div class=" flex jc ac col wrap">
+          <div *ngIf="isSP && econtract.status == 2 && confirmStatus == 0">
+            <h2>Alright ! Sure you want to accept ? </h2>
+            <button type="button" class="btn btn-outline-success btn-round" (click)="changeStatus(0)">Accept</button>
+          </div>
+          <div *ngIf="isSP && econtract.status == 15 && confirmStatus == 1">
+              <h2>Alright ! Sure you want to accept ? </h2>
+              <button type="button" class="btn btn-outline-success btn-round" (click)="changeStatus(1)">Accept</button>
+            </div>
+          <div *ngIf="isSP && econtract.status == 2 && confirmStatus == 3">
+            <h2>Ohh ! Sure About rejecting ? </h2>
+            <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(3)">Reject</button>
+          </div>
+          <div *ngIf="isSP && econtract.status == 15 && confirmStatus == 3">
+              <h2>Ohh ! Sure About rejecting ? </h2>
+              <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(3)">Reject</button>
+          </div>
+          <div *ngIf="isSP && (econtract.status == 16 || econtract.status == 19) && confirmStatus == 17">
+              <h2>Alright ! Sure you want to accept ? </h2>
+              <button type="button" class="btn btn-outline-success btn-round" (click)="changeStatus(17)">Accept</button>
+          </div>
+          <div *ngIf="isSP &&(econtract.status == 16 || econtract.status == 19) && confirmStatus == 3">
+              <h2>Alright ! Sure you want to reject ? </h2>
+              <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(3)">Reject</button>
+          </div>
+          <div *ngIf="isSP && econtract.status == 4 && confirmStatus == 5">
+              <h2>You are about to start the session ! Please ask for OTP from your SC</h2>
+              <div class="flex ac jc col">
+                  <div>
+                    <input type="number"  (keydown)="searchOTP($event)" class="form-control " required [(ngModel)]="otp">
+                    <small>{{otpError}}</small>
+                  </div>
+                  <div>
+                    <button type="button" class="btn btn-outline-success btn-round" (click)="check()">Start</button>
+                  </div>
+                </div>
+            </div>
+            <div *ngIf="isSP && econtract.status == 5 && confirmStatus == 6">
+              <h2>Everything is done for sure right ? SC can dispute if something goes wrong ! So be careful</h2>
+              <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(6)">End The Session</button>
+            </div>
+          <div *ngIf="isSC && econtract.status == 0 && confirmStatus == 1">
+            <h2>Alright ! Sure you want to accept ? </h2>
+            <button type="button" class="btn btn-outline-success btn-round" (click)="changeStatus(1)">Accept</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 0 && confirmStatus == 2">
+            <h2>Alright ! Sure you want to edit ? </h2>
+            <button type="button" class="btn btn-outline-info btn-round"  [routerLink]="econtract.editURL">Edit</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 16 && confirmStatus == 19">
+              <h2>Alright ! Sure you want to edit ? </h2>
+              <button type="button" class="btn btn-outline-info btn-round"  [routerLink]="econtract.editURL">Edit</button>
+              <button type="button" class="btn btn-outline-info btn-round" (click)="editDisputeModel()">Edit Dispute</button>
+            </div>
+          <div *ngIf="isSC && econtract.status == 0 && confirmStatus == 3">
+            <h2>Ohh ! Sure About rejecting ? </h2>
+            <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(3)">Reject</button>
+          </div>
+          <div *ngIf="isSC && (econtract.status == 1 || econtract.status == 17) && confirmStatus == 4">
+            <h2 >Perfect ! You will be redirect to payment gateway ! </h2>
+            <button type="button" class="btn btn-outline-success btn-round" (click)="changeStatus(4)">Pay</button>
+           
+          </div>
+          <div *ngIf="isSC && (econtract.status == 1 || econtract.status == 17) && confirmStatus == 3">
+            <h2>Ohh ! Sure About rejecting ? </h2>
+            <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(3)">Reject</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 16  && confirmStatus == 18">
+              <h2>Ohh ! Sure About canceling ? </h2>
+              <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(18)">Cancel Contract</button>
+            </div>
+          <div *ngIf="isSC && econtract.status == 2  && confirmStatus == 2">
+            <h2>You Have Already Made few changes ! Sure you want to edit more ? </h2>
+            <button type="button" class="btn btn-outline-info btn-round"  [routerLink]="econtract.editURL">Edit</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 5 && confirmStatus == 7">
+            <h2>Work is done ? Please Note If you end the session the money will be automatically realise to {{econtract.spName}} </h2>
+            <button type="button" class="btn btn-outline-info btn-round"  (click)="changeStatus(7)">End & Pay</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 6 && confirmStatus == 8">
+            <h2>So everything is went good ? Make {{econtract.spName}} happy and pay</h2>
+            <button type="button" class="btn btn-outline-info btn-round"  (click)="changeStatus(8)">Pay</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 4 && confirmStatus == 9">
+            <h2>You are creating a dispute before starting of session ! In case if you don't resolve the dispute you will get 100% money back </h2>
+            <button type="button" class="btn btn-outline-danger btn-round"  (click)="createDispute(1)">Dispute</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 5 && confirmStatus == 9">
+            <h2>You are creating a dispute before ending of session ! In case if you don't resolve the dispute you will get {{100 - econtract.disputeRules.inBetween}}% money back </h2>
+            <button type="button" class="btn btn-outline-danger btn-round"  (click)="createDispute(2)">Dispute</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 6 && confirmStatus == 9">
+              <h2>You are creating a dispute after ending of session ! In case if you don't resolve the dispute you will get {{100 - econtract.disputeRules.afterSession}}% money back </h2>
+              <button type="button" class="btn btn-outline-danger btn-round"  (click)="createDispute(3)">Dispute</button>
+            </div>
+          <div *ngIf="isSC && econtract.status == 9 && confirmStatus == 10 && disputeNumber == 1">
+            <h2>Once you resolve the dispute {{econtract.spName}} can start the session after taking the OTP from you !</h2>
+            <button type="button" class="btn btn-outline-success btn-round"  (click)="resolveDispute(1)">Resolve</button>
+          </div>
+          <div *ngIf="isSC && econtract.status == 9 && confirmStatus == 10 && disputeNumber == 2">
+              <h2>Once you resolve the dispute {{econtract.spName}} can end the session as per the time !</h2>
+              <button type="button" class="btn btn-outline-success btn-round"  (click)="resolveDispute(2)">Resolve</button>
+            </div>
+            <div *ngIf="isSC && econtract.status == 9 && confirmStatus == 10 && disputeNumber == 3">
+                <h2>Once you resolve the dispute {{econtract.spName}} The full money will be transferred to the {{econtract.spName}} !</h2>
+                <button type="button" class="btn btn-outline-success btn-round"  (click)="resolveDispute(3)">Resolve</button>
+              </div>
+              <div *ngIf="isSC && econtract.status == 4 && confirmStatus == 11 ">
+                <h2>You are cancelling the contract before the starting of contract you will be getting 100% money back</h2>
+                <button type="button" class="btn btn-outline-danger btn-round"  (click)="cancelContract(11)">Cancel The Contract</button>
+              </div>
+              <div *ngIf="isSC && econtract.status == 9 && confirmStatus == 11 ">
+                  <h2>You are cancelling the contract before the starting of contract you will be getting 100% money back</h2>
+                  <button type="button" class="btn btn-outline-danger btn-round"  (click)="cancelContract(11)">Cancel The Contract</button>
+                </div>
+              <div *ngIf="isSC && econtract.status == 9 && confirmStatus == 12 ">
+                <h2>You are cancelling the contract between the session ! As per rules set by you, You will get {{100 - econtract.disputeRules.inBetween}}% money back </h2>
+                <button type="button" class="btn btn-outline-danger btn-round"  (click)="cancelContract(12)">Cancel The Contract</button>
+              </div>
+              <div *ngIf="isSC && econtract.status == 9 && confirmStatus == 13 ">
+                <h2>You are cancelling the contract after the sesseon, As per rules set by you, You will get {{100 - econtract.disputeRules.afterSession}}% money back </h2>
+                <button type="button" class="btn btn-outline-danger btn-round"  (click)="cancelContract(13)">Cancel The Contract</button>
+              </div>
+              <div *ngIf="isSC && (econtract.status == 0 || econtract.status == 15) && confirmStatus == 15">
+                  <h2>Setup Dispute Rules</h2>
+                  <div class="flex col rulesSetup">
+                      <p>If Dispute is created between the session</p>
+                      <h3>{{inBetween}}%</h3>
+                      <input type="range" min="0" max="100" class="noUi-base" required [(ngModel)]="inBetween">
+                      <small>This the % from the total amount which will be given to {{econtract.spName}}</small>
+
+                      <h3>{{afterSession}}%</h3>
+                      <p>If Dispute is created after the session</p>
+                      <input type="range" min="0" max="100" class="noUi-base" required [(ngModel)]="afterSession">
+                      <small>This the % from the total amount which will be given to {{econtract.spName}}</small>
+                      <div class="checkbox">
+                          <h4><input type="checkbox" [(ngModel)]="terms" >I Accept Terms and Conditions</h4>
+                      </div>
+                  </div>
+                  <button type="button" class="btn btn-outline-success btn-round" [disabled]="!terms" (click)="changeStatus(15)">Accept</button>
+                </div>
+                <div *ngIf="isSC && confirmStatus == 100">
+                    <h2>Edit Dispute Rules</h2>
+                    <div class="flex col rulesSetup">
+                        <p>If Dispute is created between the session</p>
+                        <h3>{{inBetween}}%</h3>
+                        <input type="range" min="0" max="100" class="noUi-base" required [(ngModel)]="inBetween">
+                        <small>This the % from the total amount which will be given to {{econtract.spName}}</small>
+  
+                        <h3>{{afterSession}}%</h3>
+                        <p>If Dispute is created after the session</p>
+                        <input type="range" min="0" max="100" class="noUi-base" required [(ngModel)]="afterSession">
+                        <small>This the % from the total amount which will be given to {{econtract.spName}}</small>
+                        <div class="checkbox">
+                            <h4><input type="checkbox" [(ngModel)]="terms" >I Accept Terms and Conditions</h4>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-success btn-round" [disabled]="!terms" (click)="changeStatus(15)">Accept</button>
+                  </div>
+        </div>
+  </div>
+</div>
+<div class="container flex jc ac col" *ngIf="!loading && !loading2">
+  <div class="heading flex jc ac col">
+    <h1>{{econtract.title}}</h1>
+    <h4>Manage and Handle By Paylancer</h4>
+  </div>
+  <div class="mainHolder flex col">
+      <div class="card dataCard" *ngIf="isSC && econtract.status == 4">
+          <div >
+              <h2 >OTP:- {{econtract.otp}}</h2>
+              <small>Please don't Share this until your provider arrives </small>
+        </div>
+    </div>
+    <div class="card controlCard">
+        <h2>Updates & Action</h2>
+        
+      <div *ngIf="disputeNumber == 1">
+        <div *ngIf="isSP && econtract.status == 9 && econtract.dispute.type1.type == 1 && econtract.dispute.type1.active">
+          <h4 >{{econtract.scName | uppercase}} created dispute at {{econtract.dispute.type1.createTime |  date:'dd/MM/yy h:mm: a'}}! you can start the session only when dispute is resolved </h4>
+        </div>
+        <div *ngIf="isSP && econtract.status == 4 && econtract.dispute.type1.type == 1 && !econtract.dispute.type1.active">
+          <h4>The dispute is bring resolved by {{econtract.scName | uppercase}} :)</h4>
+        </div>
+      </div>
+      <div *ngIf="disputeNumber == 2">
+          <div *ngIf="isSP && econtract.status == 9 && econtract.dispute.type2.type == 2 && econtract.dispute.type2.active">
+            <h4 >{{econtract.scName | uppercase}} created dispute at {{econtract.dispute.type2.createTime |  date:'dd/MM/yy h:mm: a'}}! you can end the session only when dispute is resolved </h4>
+          </div>
+          <div *ngIf="isSP && econtract.status == 5 && econtract.dispute.type2.type == 2 && !econtract.dispute.type2.active">
+            <h4>The dispute is bring resolved by {{econtract.scName | uppercase}} :) ! Carry on with work</h4>
+          </div>
+      </div>
+      <div *ngIf="disputeNumber == 3">
+          <div *ngIf="isSP && econtract.status == 9 && econtract.dispute.type3.type == 3 && econtract.dispute.type3.active">
+            <h4 >{{econtract.scName | uppercase}} created dispute at {{econtract.dispute.type3.createTime |  date:'dd/MM/yy h:mm: a'}}! We will transer the amount once dispute is resolved</h4>
+          </div>
+          <div *ngIf="isSP && econtract.status == 8 && econtract.dispute.type3.type == 3 && !econtract.dispute.type3.active">
+            <h4>The dispute is bring resolved by {{econtract.scName | uppercase}} :) !</h4>
+          </div>
+      </div>
+      <h4 *ngIf="isSP && econtract.status == 0">{{SCData.displayName | uppercase}} has not accepted the contract yet.</h4>
+      <h4 *ngIf="isSP && (econtract.status == 1 || econtract.status == 17)">{{SCData.displayName | uppercase}} has accepted the contract. Waiting for payment</h4>
+      <div *ngIf="isSP && econtract.status == 2">
+        <h4 >{{SCData.displayName | uppercase}} Made Some changes. Please review it.</h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(0)">Accept</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+      </div>
+      <h4 *ngIf="isSP && econtract.status == 3">The contract is rejected.</h4>
+      <div *ngIf="isSP && econtract.status == 4">
+        <h4 >{{SCData.displayName | uppercase}} has done the payment !</h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(5)">Start The Session</button>
+      </div>
+      <div *ngIf="isSP && econtract.status == 5">
+        <h4 >Work done ? End the session</h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="endTheSessionSP()">End The Session</button>
+        <small>{{endSessionSPError}}</small>
+      </div>
+      <div *ngIf="isSP && econtract.status == 6">
+        <h4 >Waiting for {{econtract.scName | uppercase}} to confirm the session end !</h4>
+      </div>
+      <div *ngIf="isSP && econtract.status == 7">
+        <h4 >{{econtract.scName | uppercase}} ended the session, We will send the money in 3 working days ! <br> Hope to see you again</h4>
+      </div>
+      <div *ngIf="isSP && econtract.status == 8">
+        <h4 >{{econtract.scName | uppercase}} confirmed the session end, We will send the money in 3 working days ! <br> Hope to see you again</h4>
+      </div>
+      <div *ngIf="isSP && econtract.status == 11">
+          <h4>{{econtract.scName | uppercase}} cancelled the contract before the session :( !</h4>
+      </div>
+      <div *ngIf="isSP && econtract.status == 12">
+          <h4>{{econtract.scName | uppercase}} cancelled the contract between the session ! <br> We will be sending you {{econtract.disputeRules.inBetween}}% of the amount in 3 working days</h4>
+      </div>
+      <div *ngIf="isSP && econtract.status == 13">
+          <h4>{{econtract.scName | uppercase}} cancelled the contract after the session ! <br> We will be sending you {{econtract.disputeRules.afterSession}}% of the amount in 3 working days</h4>
+      </div>
+      <div *ngIf="isSP && econtract.status == 15">
+          <h4 >{{SCData.displayName | uppercase}} Has setup Dispute rules ! Please review</h4>
+          <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(1)">Accept</button>
+          <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+      </div>
+      <div *ngIf="isSP && econtract.status == 16">
+        <h4>{{econtract.scName}} wants to hire you</h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(17)">Accept</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+      </div>
+      <div *ngIf="isSP && econtract.status == 19">
+          <h4>{{econtract.scName}} created and edited contract</h4>
+          <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(17)">Accept</button>
+          <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+        </div>
+  
+      <!-- SC stuff here -->
+      <div *ngIf="disputeNumber == 1">
+          <div *ngIf="isSC && econtract.status == 4 && econtract.dispute.type1.type == 1 && !econtract.dispute.type1.active">
+              <h4>The dispute was resolved by you:)</h4>
+          </div>
+      </div>
+      <div *ngIf="isSC && econtract.status == 0">
+          <h4 *ngIf="econtract.newAmount || econtract.newStartDate || econtract.newStartTime || econtract.newTotalHours">{{SPData.displayName | uppercase}} accepted the changes !</h4>
+        <h4 >Looks Cool ? Please Select the following options </h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(15)">Accept</button>
+        <button type="button" class="btn btn-outline-info btn-round" (click)="openConfirmPage(2)">Edit</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+      </div>
+      <div *ngIf="isSC && econtract.status == 15">
+          <h4 >Looks Cool ? Please Select the following options </h4>
+          <button type="button" class="btn btn-outline-info btn-round" (click)="openConfirmPage(15)">Edit Rules</button>
+          <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+        </div>
+      <div *ngIf="isSC && econtract.status == 1">
+        <h4 >Perfect ! Go Ahead do the payment & Complete the last step </h4>
+        <div class="flex jc ac sb">
+            <h4 *ngIf="paypalLoad">loading...</h4>
+            <div id="paypal-checkout-btn"></div>
+            <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+        </div>
+       
+      </div>
+      <div *ngIf="isSC && econtract.status == 17">
+          <h4 >Perfect ! Go Ahead do the payment & Complete the last step </h4>
+         
+          <div class="flex jc ac sb" >
+              <h4 *ngIf="paypalLoad">loading...</h4>
+              <div id="paypal-checkout-btn"></div>
+          <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(3)">Reject</button>
+          </div>
+        
+        </div>
+      <div *ngIf="isSC && econtract.status == 2">
+        <h4 >Alright ! Waiting for {{SPData.displayName | uppercase}} to accept the changes </h4>
+      </div>
+      <div *ngIf="isSC && econtract.status == 3">
+        <h4>Contract is reject</h4>
+      </div>
+      <div *ngIf="isSC && econtract.status == 4">
+        <h4>Payment is done !</h4>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(9)">Dispute</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(11)">Break The contract</button>
+      </div>
+      <div *ngIf="isSC && econtract.status == 5">
+        <h4 >{{econtract.spName | uppercase}} started the session at {{econtract.startedDateTime |  date:'dd/MM/yy h:mm: a'}}</h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(7)">End & Pay</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(9)">Dispute</button>
+      </div>
+      <div *ngIf="isSC && econtract.status == 6">
+        <h4 >{{econtract.spName | uppercase}} started the session at {{econtract.startedDateTime |  date:'dd/MM/yy h:mm: a'}} <br> Ended the session at {{econtract.endedDateTime |  date:'dd/MM/yy h:mm: a'}}</h4>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(8)">Pay</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(9)">Dispute</button>
+      </div>
+      <div *ngIf="isSC && econtract.status == 7">
+        <h4 >You ended the session, We will take care of rest from here ! <br> Hope to see you again</h4>
+      </div>
+      <div *ngIf="isSC && econtract.status == 8">
+        <h4 >You confirmed the session end, We will take care of rest from here ! <br> Hope to see you again</h4>
+      </div>
+      <div *ngIf="disputeNumber == 1">
+        <div *ngIf="isSC && econtract.status == 9 && econtract.dispute.type1.type == 1 && econtract.dispute.type1.active">
+          <h4 >You created dispute at {{econtract.dispute.type1.createTime |  date:'dd/MM/yy h:mm: a'}} </h4>
+          <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(10)">Resolve</button>
+          <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(11)">Cancel The Contract</button>
+        </div>
+      </div>
+      <div *ngIf="disputeNumber == 2">
+          <div *ngIf="isSC && econtract.status == 9 && econtract.dispute.type2.type == 2 && econtract.dispute.type2.active">
+            <h4 >You created dispute at {{econtract.dispute.type2.createTime |  date:'dd/MM/yy h:mm: a'}} </h4>
+            <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(10)">Resolve</button>
+            <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(12)">Cancel The Contract</button>
+          </div>
+      </div>
+      <div *ngIf="disputeNumber == 3">
+          <div *ngIf="isSC && econtract.status == 9 && econtract.dispute.type3.type == 3 && econtract.dispute.type3.active">
+            <h4 >You created dispute at {{econtract.dispute.type2.createTime |  date:'dd/MM/yy h:mm: a'}} </h4>
+            <button type="button" class="btn btn-outline-success btn-round" (click)="openConfirmPage(10)">Resolve</button>
+            <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(13)">Cancel The Contract</button>
+          </div>
+      </div>
+      <div *ngIf="isSC && econtract.status == 11">
+        <h4>You cancelled the contract before the session  ! <br> We will be sending you full amount in 3 working days</h4>
+      </div>
+      <div *ngIf="isSC && econtract.status == 12">
+        <h4>You cancelled the contract between the session ! <br> We will be sending you {{100 - econtract.disputeRules.inBetween}}% of the amount in 3 working days</h4>
+      </div>
+      <div *ngIf="isSC && econtract.status == 13">
+        <h4>You cancelled the contract after the session ! <br> We will be sending you {{100 - econtract.disputeRules.afterSession}}% of the amount in 3 working days</h4>
+      </div>
+      <div *ngIf="isSC && econtract.status == 16">
+        <h4> Waiting for SP to accept the contract </h4>
+        <button type="button" class="btn btn-outline-info btn-round" (click)="openConfirmPage(19)">Edit</button>
+        <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(18)">Cancel</button>
+      </div>
+      <div *ngIf="isSC && econtract.status == 19">
+          <h4>You can Edit the contract, Waiting for SP to accept the contract </h4>
+          <button type="button" class="btn btn-outline-info btn-round" (click)="openConfirmPage(19)">Edit</button>
+          <button type="button" class="btn btn-outline-danger btn-round" (click)="openConfirmPage(18)">Cancel</button>
+        </div>
+    </div>
+   
+    <div class="card dataCard">
+        <h2>User Data</h2>
+        <div class="flex userData jc col" *ngIf="isSC">
+            <h3>Service Provider</h3>
+            <div class="flex jc col wrap">
+              <p *ngIf="SPData.displayName"><span>Name: </span>  {{SPData.displayName | uppercase}}</p>
+              <p *ngIf="!SPData.displayName"><span>Name: </span>  Yet To SignUp</p>
+              <p><span>Phone: </span> {{SPData.phone}}</p>
+            </div>
+          </div>
+          <div class="flex userData jc col" *ngIf="isSP">
+              <h3>Service Consumer</h3>
+              <div class="flex jc col wrap">
+                <p><span>Name: </span>  {{SCData.displayName | uppercase}}</p>
+                <p><span>Phone: </span> {{econtract.scPhone}}</p>
+              </div>
+            </div>
+    </div>
+    <div class="card dataCard">
+      <h2>Contract Data</h2>
+      <div class="flex contractData jc col">
+        <p [class.changes]="econtract.newAmount"><span>Amount: </span>Rs. {{econtract.amount}}</p>
+        <p [class.changes]="econtract.newTotalHours"><span>Total hours: </span>Hr. {{econtract.totalHours}}</p>
+      </div>
+        <div class="flex contractData jc col">
+            <h3>Expected Starting Date-Time</h3>
+            <div class="flex jc col wrap">
+                <p [class.changes]="econtract.newStartDate"><span>Start: </span> {{econtract.startDate | date: format}}</p>
+                <p [class.changes]="econtract.newStartTime"><span>Time: </span> {{econtract.startTime}} Hr</p>
+            </div>
+      </div>
+    </div>
+    <div class="card dataCard" *ngIf="econtract.status >= 4 && econtract.status != 16">
+      <h2>Logs Data</h2>
+      <div class="logsData">
+          <p><span class="bold">Started At: </span> <span *ngIf="econtract.startedDateTime">{{econtract.startedDateTime |  date:'dd/MM/yy h:mm: a'}}</span><span  *ngIf="!econtract.startedDateTime">-</span></p>
+          <p><span class="bold">Ended At: </span> <span *ngIf="econtract.endedDateTime">{{econtract.endedDateTime |  date:'dd/MM/yy h:mm: a'}}</span><span  *ngIf="!econtract.endedDateTime">-</span></p>
+      </div>
+      <hr>
+      <div class="logsData" *ngIf="econtract.dispute.latest < 5">
+        <h3>Dispute Log</h3>
+        <div>
+            <p><span class="bold">Created At: </span>
+              <span *ngIf="econtract.dispute.latest == 1">
+                  <span >{{econtract.dispute.type1.createTime |  date:'dd/MM/yy h:mm: a'}}</span>
+              </span>
+              <span *ngIf="econtract.dispute.latest == 2">
+                  <span >{{econtract.dispute.type2.createTime |  date:'dd/MM/yy h:mm: a'}}</span>
+              </span>
+              <span *ngIf="econtract.dispute.latest == 3">
+                  <span >{{econtract.dispute.type3.createTime |  date:'dd/MM/yy h:mm: a'}}</span>
+              </span> 
+            </p>
+            <p><span class="bold">Ends At: </span>
+              <span *ngIf="econtract.dispute.latest == 1">
+                  <span >{{econtract.dispute.type1.endTime |  date:'dd/MM/yy h:mm: a'}}</span>
+              </span>
+              <span *ngIf="econtract.dispute.latest == 2">
+                  <span >{{econtract.dispute.type2.endTime |  date:'dd/MM/yy h:mm: a'}}</span>
+             </span>
+             <span *ngIf="econtract.dispute.latest == 3">
+                <span >{{econtract.dispute.type3.endTime |  date:'dd/MM/yy h:mm: a'}}</span>
+             </span>
+           </p>
+           <p><span class="bold">Status: </span>
+            <span *ngIf="econtract.dispute.latest == 1">
+                <span *ngIf="econtract.dispute.type1.active">Active</span>
+                <span *ngIf="!econtract.dispute.type1.active">Resolved</span>
+            </span>
+            <span *ngIf="econtract.dispute.latest == 2">
+                <span *ngIf="econtract.dispute.type2.active">Active</span>
+                <span *ngIf="!econtract.dispute.type2.active">Resolved</span>
+            </span>
+            <span *ngIf="econtract.dispute.latest == 3">
+                <span *ngIf="econtract.dispute.type3.active">Active</span>
+                <span *ngIf="!econtract.dispute.type3.active">Resolved</span>
+            </span>
+          </p>
+          <p><span class="bold">Type: </span>
+            <span *ngIf="econtract.dispute.latest == 1">
+                <span>Before The Session</span>
+            </span>
+            <span *ngIf="econtract.dispute.latest == 2">
+                <span>Between The Session</span>
+            </span>
+            <span *ngIf="econtract.dispute.latest == 3">
+                <span>After The Session</span>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card dataCard" *ngIf="econtract.status != 0 && econtract.status != 2">
+        <h2>Dispute Rules</h2>
+        <div class="flex rulesData jc col">
+          <h3>Before The Session</h3>
+          <div> 
+              <p><span>Service Provider: </span> 0%</p>
+              <p><span>Service Consumer: </span> 100%</p>
+          </div>
+        </div>
+        <hr>
+        <div class="flex rulesData jc col">
+            <h3>Between The Session</h3>
+            <div>
+                <p><span>Service Provider: </span> {{econtract.disputeRules.inBetween}}%</p>
+                <p><span>Service Consumer: </span> {{100 - econtract.disputeRules.inBetween}}%</p>
+            </div>
+        </div>
+        <hr>
+        <div class="flex rulesData jc col">
+            <h3>After The Session</h3>
+            <div>
+                <p><span>Service Provider: </span> {{econtract.disputeRules.afterSession}}%</p>
+                <p><span>Service Consumer: </span> {{100 - econtract.disputeRules.afterSession}}%</p>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+</div>

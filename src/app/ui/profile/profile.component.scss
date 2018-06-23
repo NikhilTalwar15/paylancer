@@ -1,0 +1,27 @@
+.profile {
+    img {
+        height: 125px;
+        padding: 10px;
+    }
+    div {       
+        margin: 15px;
+    }
+    .active {
+        border: 4px solid #6BD098;
+    }
+    .inActive {
+        border: 4px solid #C6C9CE;
+    }
+}
+.inputHolder {
+    p {
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+}
+.submit {
+    margin-top: 20px;
+}
+small {
+    color: red;
+}

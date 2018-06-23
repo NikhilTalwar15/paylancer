@@ -1,0 +1,54 @@
+<div *ngIf="!(auth.user | async); else alreadyLoggedIn" class="loginPage">
+  <div>
+      <img src="../../../assets/images/main/logo.png" class="headLogo" >
+  </div>
+
+  <h3 class="tagLine">Welcome to your payment solution app</h3>
+
+  <div class="flex jc ac mainContainer col">
+      <h2>Continue With Us</h2>
+      <div> 
+        <hr>
+        <div>
+            <button (click)="signInWithGoogle()"  class="btn btn-danger btn-round googleBtn">
+                <i class="fa fa-google fa-lg btn-icon"></i>Google
+              </button>
+        </div>
+        <div>
+            <button (click)="signInWithFacebook()"  class="btn btn-info btn-round facebookBtn">
+                <i class="fa fa-facebook fa-lg btn-icon"></i>Facebook
+              </button>
+        </div>
+
+        </div>
+          <!-- <user-form></user-form> -->
+  </div>
+</div>
+<div class="features">
+  <div class="flex js ">
+        <h2> <i class="fa fa-credit-card-alt iconSetter" aria-hidden="true"></i>
+          Advance Payment
+        </h2>
+  </div>
+  <div class="flex js ">
+      <h2> <i class="fa fa-bar-chart iconSetter" aria-hidden="true"></i>
+        Pre-Settled pricing
+      </h2>
+</div>
+<div class="flex js ">
+    <h2> <i class="fa fa-inr iconSetter" aria-hidden="true"></i>
+      NO Last Moment Negotiation
+    </h2>
+</div>
+<div class="flex js ">
+    <h2> <i class="fa fa-mouse-pointer iconSetter" aria-hidden="true"></i>
+      One Click Dispute.
+    </h2>
+</div>
+</div>
+
+<ng-template #alreadyLoggedIn>
+  <p class="text-success">
+    Already logged in!
+  </p>
+</ng-template>

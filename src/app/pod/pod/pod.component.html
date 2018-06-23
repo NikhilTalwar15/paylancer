@@ -1,0 +1,28 @@
+<div class="flex jc ac col" *ngIf="!loading">
+  <div *ngIf="orderlist.length == 0" class="flex jc ac col">
+          <img src="../assets/images/main/happy.svg" class="happy">
+          <h2>Hey Welcome ! </h2>
+          <h3>You Don't Have Any Orders</h3>
+  </div>
+  <div *ngIf="orderlist.length > 0 " class="flex jc ac col">
+    <h2>Your's Pay on Delivery</h2>
+   
+    <hr>
+</div>
+  <div *ngIf="!loading" class="maxWidth">
+      <div  *ngFor="let order of orderlist">
+              <div class="card flex jl contractCard" [routerLink]="order.oid">
+                      <div class="flex jc ac contractSide">
+                              <img [src]="order.site_logo" class="contractLogo">
+                      </div>
+                      <div class="flex sb data dataSide">
+                              <div class="flex col"> 
+                              <p><span>Product name : </span> {{order.pname}}</p>
+                              <p><span>Website name : </span> {{order.site_name}}</p>
+                              <p><span>Cost : </span> {{order.cost}}</p>
+                      </div>                 
+                      </div>
+              </div>
+      </div>
+  </div>
+</div>

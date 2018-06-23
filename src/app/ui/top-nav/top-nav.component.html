@@ -1,0 +1,63 @@
+<nav class="nav">
+  <div class="nav-left">
+      <span [hidden]="!auth.showBack"  routerLink="/" class="backButton"><i class="fa fa fa-chevron-left"></i></span>
+    <a class="nav-item logo" routerLink="/">
+      <!-- <img src="assets/images/angularfirebase.png" width="30px" alt="Firestarter Angular4 Demo App"/>  -->
+     <span class="headingNameLogo"><img src="../../assets/images/main/yay.png" class="payLancerLogo"></span> 
+    </a>
+  </div>
+  <div class="notificationDiv flex jc ac col" routerLink="/notification">
+    <div class="notificationCount flex jc ac" *ngIf="!loading && totalNotify">
+      <p>{{totalNotify}}</p>
+    </div>
+    <div class="bellIcon">
+      <img src="../../../assets/images/main/bell.svg" class="">
+    </div>
+    <div>
+    </div>
+  </div>
+  
+  <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+  <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+  <span class="nav-toggle" (click)="toggleCollapse()" id="menuOpener" [ngClass]="{'is-active': show}">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+
+  <!-- This "nav-menu" is hidden on mobile -->
+  <!-- Add the modifier "is-active" to display it on mobile -->
+  <div class="nav-right nav-menu" [ngClass]="{'is-active': show}">
+    <a class="nav-item colorSet" (click)="toggleCollapse()" routerLink="/login" *ngIf="!auth._user.uid">
+      Login
+    </a>
+    <a class="nav-item colorSet" (click)="toggleCollapse()" routerLink="/econtract/create" *ngIf="auth._user.phoneVerified">
+      Create E-Contract
+    </a>
+    <a class="nav-item colorSet" (click)="toggleCollapse()" routerLink="/payod" *ngIf="auth._user.phoneVerified">
+     Pay On delivery
+    </a>
+    <a class="nav-item colorSet" (click)="toggleCollapse()" routerLink="/inactive" *ngIf="auth._user.phoneVerified">
+     Inactive E-Contract
+    </a>
+    <a class="nav-item colorSet" (click)="toggleCollapse()" routerLink="/bankDetails" *ngIf="auth._user.phoneVerified">
+      Bank Account Details
+     </a>
+     <a class="nav-item colorSet" (click)="toggleCollapse()" routerLink="/profile" *ngIf="auth._user.phoneVerified">
+      My Profile
+     </a>
+    <!-- <a class="nav-item" (click)="toggleCollapse()" routerLink="/notes">
+      Firestore
+    </a>
+    <a class="nav-item" (click)="toggleCollapse()" routerLink="/items">
+      Realtime DB
+    </a>
+    <a class="nav-item" (click)="toggleCollapse()" routerLink="/uploads">
+      File Uploads
+    </a> -->
+    <a class="nav-item colorSet" (click)="signOut()" *ngIf="auth._user.uid">
+      Log Out
+    </a>
+
+  </div>
+</nav>

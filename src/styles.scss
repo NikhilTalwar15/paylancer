@@ -1,0 +1,208 @@
+@import "./styles/loading.scss";
+@import "./styles/firestarter.scss";
+
+
+/*!
+
+ =========================================================
+ * Paper Kit 2 Angular - v1.0.0
+ =========================================================
+
+ * Product Page: http://www.creative-tim.com/product/paper-kit-2-angular
+ * Copyright 2017 Creative Tim (http://www.creative-tim.com)
+ * Licensed under MIT (https://github.com/timcreative/paper-kit/blob/master/LICENSE.md)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ */
+
+ @import "./assets/sass/paper-kit/variables";
+ @import "./assets/sass/paper-kit/mixins";
+ 
+ @import "./assets/sass/paper-kit/typography";
+ 
+ // Core CSS
+ @import "./assets/sass/paper-kit/misc";
+ @import "./assets/sass/paper-kit/buttons";
+ @import "./assets/sass/paper-kit/inputs";
+ @import "./assets/sass/paper-kit/progress-bars";
+ @import "./assets/sass/paper-kit/sliders";
+ @import "./assets/sass/paper-kit/alerts";
+ @import "./assets/sass/paper-kit/labels";
+ @import "./assets/sass/paper-kit/tooltips-and-popovers";
+ @import "./assets/sass/paper-kit/sections";
+ @import "./assets/sass/paper-kit/checkbox-radio";
+ @import "./assets/sass/paper-kit/navbars";
+ @import "./assets/sass/paper-kit/images";
+ @import "./assets/sass/paper-kit/cards";
+ @import "./assets/sass/paper-kit/footers";
+ 
+ 
+ // Bootstrap Switch
+ @import "./assets/sass/paper-kit/bootstrap-switch";
+ 
+ // Fancy Stuff
+ @import "./assets/sass/paper-kit/dropdown";
+ //
+ // icons
+ @import "./assets/sass/paper-kit/icons";
+ //
+ @import "./assets/sass/paper-kit/tabs-navs-pagination";
+ @import "./assets/sass/paper-kit/collapse";
+ @import "./assets/sass/paper-kit/carousel";
+ @import "./assets/sass/paper-kit/modal";
+ //
+ @import "./assets/sass/paper-kit/responsive";
+ @import "./assets/sass/paper-kit/plugins/datetimepicker";
+ @import "./assets/sass/paper-kit/social-buttons";
+ @import "./assets/sass/paper-kit/examples";
+
+ .flex{
+    display :flex;
+    &.jl{
+      justify-content :flex-start;
+    }
+    &.jc{
+      justify-content :center;
+    }
+    &.jr{
+      justify-content :flex-end;
+    }
+    &.sa{
+      justify-content :space-around;
+    }
+    &.sb{
+      justify-content :space-between;
+    }
+    &.al{
+      align-items :flex-start;
+    }
+    &.ac{
+      align-items :center;
+    }
+    &.as {
+      align-items: stretch;
+    }
+    &.ar{
+      align-items :flex-end;
+    }
+    &.col{
+      flex-direction :column;
+    }
+    &.noshrink{
+      flex-shrink :0;
+    }
+    &.wrap{
+      flex-wrap :wrap;
+    }
+    .even{
+      flex-grow :1;
+    }
+  }
+  .modal {
+    background-color: rgba(255, 255, 255, 0.98);
+    position: fixed;
+    height: 110vh;
+    width: 100vw;
+    top: 0px;
+    left: 0px;
+    transition: all 0.25s ease-in-out;
+    z-index: 1000;
+    transform: scale(1.0);
+    &.hidden {
+      text-align: right;
+      transform: scale(0.0);
+      opacity: 0.0;
+      overflow: hidden;
+      transition: all 0.25s ease-in-out;
+      .box {
+        opacity: 0.0;
+      }
+    }
+    .box {
+      position: relative;
+      // background: #fff;
+      border-radius: 3px;
+      opacity: 1.0;
+      .close {
+        position: absolute;
+        z-index: 25;
+        top: 5px;
+        right: 5px;
+        button {
+          border: none;
+          background: none;
+          font-size: 20px;
+          color: #333;
+          cursor: pointer;
+          &:hover {
+            color: black;
+          }
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+ 
+  .columns{
+    margin: 0 !important;
+  }
+  .maxWidth{
+    width: 100%;
+  }
+
+  .spinner {
+    margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+  
+  .cube1, .cube2 {
+    background-color: #333;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+    animation: sk-cubemove 1.8s infinite ease-in-out;
+  }
+  
+  .cube2 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+  }
+  
+  @-webkit-keyframes sk-cubemove {
+    25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+    50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+    75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+    100% { -webkit-transform: rotate(-360deg) }
+  }
+  
+  @keyframes sk-cubemove {
+    25% { 
+      transform: translateX(42px) rotate(-90deg) scale(0.5);
+      -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+    } 50% { 
+      transform: translateX(42px) translateY(42px) rotate(-179deg);
+      -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+    } 50.1% { 
+      transform: translateX(42px) translateY(42px) rotate(-180deg);
+      -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+    } 75% { 
+      transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+      -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+    } 100% { 
+      transform: rotate(-360deg);
+      -webkit-transform: rotate(-360deg);
+    }
+  }
+  body {
+    font-family: "Segoe UI",Arial,sans-serif !important;
+  }

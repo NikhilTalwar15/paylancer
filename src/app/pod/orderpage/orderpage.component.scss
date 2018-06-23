@@ -1,0 +1,116 @@
+.changes {
+    color: red;
+}
+small {
+    color: red;
+}
+.rulesSetup {
+    h3 {
+        margin-top: 20px;
+    }
+    span {
+        color: black;
+    }
+}
+.dataCard {
+    padding: 10px;
+    hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    h2 {
+        margin-top: 10px;
+    }
+    .userData {
+        padding-left: 10px;
+
+        div {
+            padding-left: 20px;
+            span {
+                font-weight: bold;
+            }
+        }
+    }
+    .contractData{
+        padding-left: 10px;
+
+        div {
+            padding-left: 20px;
+        }
+        span {
+            font-weight: bold;
+        }
+    }
+    .logsData{
+        padding-left: 10px;
+
+        div {
+            padding-left: 20px;
+        }
+        .bold {
+            font-weight: bold;
+        }
+    }
+    .rulesData{
+        padding-left: 10px;
+
+        div {
+            padding-left: 20px;
+        }
+        span {
+            font-weight: bold;
+        }
+    }
+}
+.controlCard {
+    padding: 10px;
+    hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    h2 {
+        margin-top: 10px;
+    }
+    div {
+        padding-left: 20px;
+        span {
+            font-weight: bold;
+        }
+    }
+    
+}
+.container {
+    width: 100%;
+    padding: 5px;
+    .card{
+        width: 100%;
+    }
+    .mainHolder {
+        width: 100%;
+    }
+}
+.confirmPage {
+    padding: 10px;
+}
+.close{
+    height: 50px;
+ width: 50px;
+ border: 1px solid;
+ border-radius: 50%;
+     span {
+         color: black;
+         font-size: 20px;
+     }
+ }
+ .heading {
+     h1{
+         margin-bottom: 10px;
+     }
+     h4{
+         margin-top: 10px;
+         margin-bottom: 30px;
+     }
+ }
+ .sitelogo {
+     max-height: 100px;
+ }

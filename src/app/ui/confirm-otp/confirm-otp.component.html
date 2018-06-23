@@ -1,0 +1,91 @@
+<div class="modal flex jc ac" *ngIf="loading">
+    <div class="spinner">
+      <div class="cube1"></div>
+      <div class="cube2"></div>
+    </div>
+  </div>
+<div class="flex jc ac col" *ngIf="step == 0">
+        <img src="../../assets/images/main/smartphone.svg" class="phoneLogo">
+    <h2>Hey ! {{auth._user.displayName}} </h2>
+    <h3>Please Verify Your Phone Number</h3>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+               
+                    <div class="formDiv">
+                        <p>Phone Number</p>
+                        <input type="number" class="form-control " (keyup.enter)="sendOTP()" [disabled]="!hideSendOTP" required (keydown)="phoneNumberInput($event)" [(ngModel)]="phoneNumber">
+                        <small class="error">{{phoneErrorMessage}}</small>
+                        <small class="success">{{phoneSuccessMessage}}</small>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline-success btn-round" (click)="sendOTP()" *ngIf="hideSendOTP">Send OTP</button>
+                   <div class="flex jc ac col" *ngIf="!hideSendOTP">
+                        <h4>Please Check for OTP on phone number: {{phoneNumber}}</h4>
+                    <div class="formDiv optDiv flex">
+                        <div>   
+                                <p>Enter OTP</p>
+                                <input type="number" class="form-control " (keyup.enter)="checkOTP()" required (keydown)="phoneNumberInput($event)" [(ngModel)]="enteredOTP">
+                                <small class="error">{{otpError}}</small>
+                                <small class="success">{{otpSuccess}}</small>
+                        </div>
+                        <div class="flex jc ar">
+                                <button type="button" class="btn btn-outline-success confirmOTP btn-round" (click)="checkOTP()">Confirm</button>
+                        </div>
+                    </div>
+                  
+                   </div>
+                    <div *ngIf="!hideSendOTP" class="controlButton flex jc sa"> 
+                        <div>
+                                <button type="button" class="btn btn-outline-info btn-round"   (click)="changeNumber()">Change Number</button>
+                        </div>
+                        <div>
+                                <button type="button" class="btn btn-outline-info btn-round"  [disabled]='!reSendOTP' (click)="sendOTP()">Send Again</button>
+                                <p><small *ngIf="!reSendOTP" class="timer">Send again in {{ticks}} mins</small></p>
+                        </div>
+   
+                    </div>
+                  
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="flex jc ac col">
+    <h2>Hey ! {{auth._user.displayName}}</h2>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+                <div class="formDiv">
+                        <p>Name</p>
+                        <input type="text" class="form-control " [(ngModel)]="userName" >
+                    </div>
+                    <div class="formDiv">
+                        <p>Profession</p>
+                        <input type="text" class="form-control " [(ngModel)]="Profession">
+                    </div>
+                    <div class="formDiv">
+                        <p>Address</p>
+                        <textarea type="text" class="form-control border-input" [(ngModel)]="Address"></textarea>
+                    </div>
+                    <div class="formDiv">
+                        <p>Phone Number</p>
+                        <input type="number" class="form-control " required [(ngModel)]="phoneNumber">
+                        <small>{{phoneErrorMessage}}</small>
+                    </div>
+                    
+                    <button type="button" class="btn btn-outline-success btn-round" (click)="sendOTP()" *ngIf="hideSendOTP">Verfy</button>
+                    <div class="formDiv" *ngIf="!hideSendOTP">
+                        <p>Enter OTP</p>
+                        <input [textMask]="{mask: mask}" [(ngModel)]="enteredOTP"  class="form-control " type="text"/>
+                        <button type="button" class="btn btn-outline-success btn-round" (click)="checkOTP()">Confirm</button>
+                    </div>
+                   
+                    <button type="button" class="btn btn-outline-success btn-round"  *ngIf="!hideSendOTP" (click)="sendOTP()">Send Again</button>
+        </div>
+    </div>
+
+    <div class="flex jc ac col formDiv">
+        <button type="button" class="btn btn-success btn-round" [disabled]="!canSubmit" (click)="submitForm()">Submit</button>
+    </div>
+  
+</div> -->

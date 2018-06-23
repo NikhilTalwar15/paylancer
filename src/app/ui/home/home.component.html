@@ -1,0 +1,68 @@
+<div class="flex jc ac col" *ngIf="!loading2 && !loading2 &&!loading3">
+    <div *ngIf="SPecontracts.length == 0  && SCecontracts.length ==  0" class="flex jc ac col">
+            <img src="../../assets/images/main/happy.svg" class="happy">
+            <h2>Hey Welcome ! </h2>
+            <h3>You Don't Have Any Contract</h3>
+            <h3>Create one and Hire/Get Hired  Now</h3>
+            <a type="button" class="btn btn-success btn-round create" routerLink="/econtract/create">Create E-contract</a>
+    </div>
+    <div *ngIf="SPecontracts.length > 0 || SCecontracts.length > 0 " class="flex jc ac col">
+        <h3>Create one and Hire/Get Hired  Now</h3>
+            <a type="button" class="btn btn-success btn-round create" routerLink="/econtract/create">Create E-contract</a>
+            <hr>
+    </div>
+    <div *ngIf="!loading3" class="maxWidth">
+        <div  *ngFor="let order of orderlist">
+                <div class="card flex jl contractCard" [routerLink]="'payod/'+order.oid">
+                        <div class="flex jc ac contractSide">
+                                <img [src]="order.site_logo" class="contractLogo">
+                        </div>
+                        <div class="flex sb data dataSide">
+                                <div class="flex col"> 
+                                <p><span>Product name : </span> {{order.pname}}</p>
+                                <p><span>Website name : </span> {{order.site_name}}</p>
+                                <p><span>Cost : </span> {{order.cost}}</p>
+                        </div>                 
+                        </div>
+                </div>
+        </div>
+    </div>
+    <div *ngIf="!loading2" class="maxWidth">
+        <div  *ngFor="let contract of SPecontracts">
+                <div class="card flex jl contractCard" [routerLink]="contract.url">
+                        <div class="flex jc ac contractSide">
+                                <img [src]="contract.logoUrl" class="contractLogo">
+                        </div>
+                        <div class="flex sb data dataSide">
+                                <div class="flex col"> 
+                                <p><span>Title : </span> {{contract.title}}</p>
+                                <p *ngIf="contract.scName"><span>With  : </span> {{contract.scName}}</p>
+                                <p *ngIf="!contract.scName"><span>With  : </span> {{contract.scPhone}}</p>
+                                <p><span>Amount: </span> Rs. {{contract.amount}}</p>
+                                <p><span>Status: </span> {{contract.statusMessage}}</p>
+                        </div>                 
+                        </div>
+                </div>
+        </div>
+    </div>
+    <div *ngIf="!loading1" class="maxWidth">
+            <div  *ngFor="let contract of SCecontracts">
+                <div class="card flex jl contractCard" [routerLink]="contract.url">
+                        <div class="flex jc ac contractSide">
+                                <img [src]="contract.logoUrl" class="contractLogo">
+                        </div>
+                        <div class="flex sb data dataSide">
+                                <div class="flex col"> 
+                                        <p><span>Title : </span> {{contract.title}}</p>
+                                        <p *ngIf="contract.spName"><span>With  : </span> {{contract.spName}}</p>
+                                        <p *ngIf="!contract.spName"><span>With  : </span> {{contract.spPhone}}</p>
+                                        <p><span>Amount: </span> Rs. {{contract.amount}}</p>
+                                        <p><span>Status: </span> {{contract.statusMessage}}</p>
+                                </div>
+                                                              
+                        </div>
+                </div>
+            </div>
+        </div>
+   
+</div>

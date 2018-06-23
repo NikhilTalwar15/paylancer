@@ -1,0 +1,86 @@
+<div class="modal flex jc ac" *ngIf="loading || paypalLoad">
+  <div class="spinner">
+    <div class="cube1"></div>
+    <div class="cube2"></div>
+  </div>
+</div>
+
+<div class="modal flex jc ac col wrap" *ngIf="confirmPage">
+    <div class="confirmPage flex col jc ac">
+          <div class="close flex jc ac" (click)="confirmPage = false">
+              <span><</span>
+            </div>
+          <div class=" flex jc ac col wrap">
+            <div *ngIf="newStatusValue == 2">
+              <h2>Alright ! Sure you want to confirmPage the order & pay ? </h2>
+              
+              <button type="button" class="btn btn-outline-success btn-round" (click)="paymentCall(1)">Pay to Paylancer</button>
+              
+            </div>
+            <div *ngIf="newStatusValue == 0">
+                <h2>Are you sure you want to cancel the payment ? </h2>
+                <button type="button" class="btn btn-outline-danger btn-round" (click)="updateStatusValue(0)">Cancel</button>
+              </div>
+              <div *ngIf="newStatusValue == 4">
+                <h2>Are you sure you want to raise dispute ? </h2>
+                <button type="button" class="btn btn-outline-danger btn-round" (click)="updateStatusValue(4)">Dispute</button>
+              </div>
+          </div>
+    </div>
+</div>
+<div class="container flex jc ac col" *ngIf="!loading">
+  <div class="heading flex jc ac col">
+    <img [src]="orderData.site_logo" class="sitelogo">
+    <h3>Pay On Delivery</h3>
+  </div>
+  <div class="mainHolder flex col">
+      <div class="card dataCard" *ngIf="orderData.status == 2">
+          <div >
+              <h2 >OTP:- {{orderData.otp}}</h2>
+              <small>Please Don't Share this until Your Order arrives </small>
+        </div>
+    </div>
+    <div class="card dataCard" *ngIf="orderData.status == 3">
+      <div >
+        <h4 >Delivery Confirmed & Amount transfered to Marchent</h4>
+    </div>
+</div>
+    <div class="card dataCard">
+      <div class="flex userData jc col" >
+          <h3>Merchant Details</h3>
+          <div class="flex jc col wrap">
+            <p ><span>Name: </span>  {{orderData.site_name}}</p>
+            <p><span>URL: </span> {{orderData.site_url}}</p>
+            <p><span>Merchant ID: </span> {{orderData.m_id}}</p>
+          </div>
+      </div>
+      <div class="flex userData jc col" >
+        <h3>Order Details</h3>
+        <div class="flex jc col wrap">
+          <p ><span>Name: </span>  {{orderData.pname}}</p>
+          <p><span>Cost: </span> {{orderData.cost}}</p>
+          <p><span>Product ID: </span> {{orderData.pid}}</p>
+          <p><span>Order ID: </span> {{orderData.oid}}</p>
+          <p><span>Cancellation Fees: </span> {{orderData.cancel_fee}}</p>
+          <p><span>Expected Delivery Date: </span> {{orderData.expected_d_date |  date:'dd/MM/yy'}}</p>
+          <!-- <p><span>Product URL: </span> {{orderData.product_url}}</p> -->
+        </div>
+    </div>
+  </div>
+  <div class="card dataCard" *ngIf="orderData.status != 3">
+      <h3>Actions</h3>
+    <div class="flex jc ac sb" *ngIf="orderData.status == 1">
+        <h4 *ngIf="paypalLoad">loading...</h4>
+        <div id="paypal-checkout-btn"></div>
+      <!-- <button type="button" class="btn btn-outline-success btn-round" (click)="changeStatus(2)">Pay to Paylancer</button> -->
+      <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(0)">Cancel</button>
+   </div>
+   <div class="flex jc ac sb" *ngIf="orderData.status == 2">
+    <h4 >Payment is Succesfull</h4>
+    <button type="button" class="btn btn-outline-danger btn-round" (click)="changeStatus(4)">Raise Dispute</button>
+   </div>
+   
+</div>
+  </div>
+
+</div>

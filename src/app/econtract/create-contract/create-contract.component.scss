@@ -1,0 +1,117 @@
+.formDiv {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    input {
+        width: 100%;
+    }
+    p{
+        margin-bottom: 5px;
+        margin-top: 15px;
+    }
+}
+.row {
+    width: 100%;
+}
+.timeDiv {
+    input {
+        width: 50%;
+        padding: 10px
+    }
+}
+small {
+    color: red;
+}
+.search {
+   button{
+       margin-left: 20px;
+   }
+}
+.result{
+    padding: 10px;
+    border: 0.5px solid green;
+    span {
+        font-weight: bold;
+    }
+}
+.close {
+    span {
+        color: red;
+    }
+}
+.backgroundImageSetter {
+    background-color: rgba(255, 255, 255, 0.98);
+    background-image: url('../../../assets/images/main/black_c.svg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    opacity: 0.025;
+    position: absolute;
+    margin-top: 30px;
+    height: 90%;
+    width: 100vw;
+    top: 0px;
+    left: 0px;
+    
+    z-index: 0;
+
+}
+.createContainer {
+    position: relative;
+    width: 100%;
+    z-index: 2;
+}
+.maxWidth {
+    width: 100%;
+}
+.red {
+    color: red;
+}
+.searchButton {
+    margin: 0px;
+    font-size: 22px;
+    margin-left: 15px;
+    color: #6bd098;
+    cursor: pointer;
+}
+
+.confirmSmile {
+    height: 120px;
+    padding-top: 20px;
+}
+.close{
+   height: 50px;
+width: 50px;
+border: 1px solid;
+border-radius: 50%;
+    span {
+        color: black;
+        font-size: 20px;
+    }
+}
+.confirm{
+    span {
+        font-weight: bold;
+    }
+}
+.final {
+    margin-top: -100px;
+}
+.labelForType {
+    
+        margin-bottom: 5px !important;
+        margin-top: 15px;
+
+}
+.radioDiv {
+    input {
+        margin-right: 10px;
+    }
+    label {
+        font-size: 15px;
+    }
+}
+.userError {
+    margin-top: 15px;
+}

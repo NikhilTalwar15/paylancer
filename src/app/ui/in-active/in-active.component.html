@@ -1,0 +1,50 @@
+<div class="flex jc ac col" *ngIf="!loading2 && !loading2">
+    <div *ngIf="SPecontracts.length < 1 && SCecontracts.length < 1" class="flex jc ac col">
+            <img src="../../assets/images/main/thinking.svg" class="happy">
+            <h2>Hmmmm ! </h2>
+            <h3>You Don't Have Any Inactive EContract</h3>
+            <a type="button" class="btn btn-success btn-round create" routerLink="/">Home Page</a>
+    </div>
+    <div *ngIf="SPecontracts.length > 0 || SCecontracts.length > 0 " class="flex jc ac col">
+            <h3>Inactive EContract</h3>
+            <a type="button" class="btn btn-success btn-round create" routerLink="/">Home Page</a>
+            <hr>
+    </div>
+
+    <div *ngIf="!loading2" class="maxWidth">
+        <div  *ngFor="let contract of SPecontracts">
+                <div class="card flex jl contractCard" [routerLink]="contract.url">
+                        <div class="flex jc ac">
+                                <img [src]="contract.logoUrl" class="contractLogo">
+                        </div>
+                        <div class="flex sb data">
+                                <div class="flex col"> 
+                                <p><span>Title : </span> {{contract.title}}</p>
+                                <p><span>With  : </span> {{contract.scName}}</p>
+                                <p><span>Amount: </span> Rs. {{contract.amount}}</p>
+                                <p><span>Status: </span> {{contract.statusMessage}}</p>
+                        </div>                 
+                        </div>
+                </div>
+        </div>
+    </div>
+    <div *ngIf="!loading1" class="maxWidth">
+            <div  *ngFor="let contract of SCecontracts">
+                <div class="card flex jl contractCard" [routerLink]="contract.url">
+                        <div class="flex jc ac">
+                                <img [src]="contract.logoUrl" class="contractLogo">
+                        </div>
+                        <div class="flex sb data">
+                                <div class="flex col"> 
+                                        <p><span>Title : </span> {{contract.title}}</p>
+                                        <p><span>With  : </span> {{contract.spName}}</p>
+                                        <p><span>Amount: </span> Rs. {{contract.amount}}</p>
+                                        <p><span>Status: </span> {{contract.statusMessage}}</p>
+                                </div>
+                                                              
+                        </div>
+                </div>
+            </div>
+        </div>
+   
+</div>

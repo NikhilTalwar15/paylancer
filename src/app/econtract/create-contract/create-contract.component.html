@@ -1,0 +1,150 @@
+<div class="modal flex jc ac" *ngIf="econtractService.loading || loading">
+  <div class="spinner">
+    <div class="cube1"></div>
+    <div class="cube2"></div>
+  </div>
+</div>
+
+<div class="flex jc ac col maxWidth">
+<div class="backgroundImageSetter flex jc ac">
+
+</div>
+</div>
+
+
+<div class="modal flex jc ac col wrap" *ngIf="lastStep">
+  <div class="flex col jc ac final">
+      <div class="close flex jc ac" (click)="lastStep = false">
+          <span><</span>
+        </div>
+        <div class=" flex confirm col wrap" *ngIf="userType == 1">
+            <img src="../../assets/images/main/confirmSmile.svg" class="confirmSmile">
+            <h2><span>Title:</span> {{title}}</h2>
+            <h3 *ngIf="gotUser && (userType == 1)"><span>Name: </span> {{sc.displayName}}</h3>
+            <h3 *ngIf="usernotexist && (userType == 1)"><span>Phone number:</span> {{ServiceConsumerPhone}}</h3>
+            <h3 *ngIf="gotUser && (userType == 2)"><span>Name: </span> {{sp.displayName}}</h3>
+            <h3 *ngIf="usernotexist && (userType == 2)"><span>Phone number:</span> {{ServiceProviderPhone}}</h3>
+            <h3><span>Amount:</span> {{amount}}</h3>
+            <!-- <h3>Starts On {{startDate | date:'mediumDate'}} at {{displayStartTime}}</h3> -->
+            <h3><span>Total TIme:</span> {{totalHours}} hrs</h3>
+            <div class="checkbox">
+                <h4><input type="checkbox" [(ngModel)]="terms" >I Accept Terms and Conditions</h4>
+            </div>
+            <button type="button" class="btn btn-outline-success btn-round" [disabled]="!terms" (click)="confirm()">Confirm</button>
+        </div>
+        <div class=" flex confirm col wrap" *ngIf="userType == 2">
+          <h2>Setup Dispute Rules</h2>
+          <div class="flex col rulesSetup">
+              <p>If Dispute is created between the session</p>
+              <h3>{{inBetween}}%</h3>
+              <input type="range" min="0" max="100" class="noUi-base" required [(ngModel)]="inBetween">
+              <small>This the % from the total amount which will be given to {{sp.displayName}}</small>
+
+              <h3>{{afterSession}}%</h3>
+              <p>If Dispute is created after the session</p>
+              <input type="range" min="0" max="100" class="noUi-base" required [(ngModel)]="afterSession">
+              <small>This the % from the total amount which will be given to {{sp.displayName}}</small>
+              <div class="checkbox">
+                  <h4><input type="checkbox" [(ngModel)]="terms" >I Accept Terms and Conditions</h4>
+              </div>
+          </div>
+          <button type="button" class="btn btn-outline-success btn-round" [disabled]="!terms" (click)="confirm()">Create</button>
+        </div>
+  </div>
+</div>
+<div class="flex jc ac col  createContainer">
+  <h2>Create A EContract</h2>
+  <div class="row">
+      <div class="col-md-6 col-sm-12">
+              <div class="formDiv">
+                      <p>Work Title <span class="red">*</span></p>
+                      <input type="text" class="form-control "  required [(ngModel)]="title" >
+                      <small>{{titleError}}</small>
+                  </div>
+                  <div class="formDiv">
+                      <p>Amount <span class="red">*</span></p>
+                      <input type="number" class="form-control " required [(ngModel)]="amount">
+                      <small>{{amountError}}</small>
+                  </div>
+                  <div class="formDiv ">
+                      <p>Expected Starting Date and Time <span class="red">*</span></p>
+                      <div class="flex jc ac timeDiv">
+                            <input type="Date" class="form-control " required [(ngModel)]="startDate">
+                            <input type="time" class="form-control " required [(ngModel)]="startTime">
+                      </div>
+                      <small>{{startTimeError}}</small>
+                      <small>{{startDateError}}</small>
+                  </div>
+                  <div class="formDiv">
+                    <p>Total Working hours <span class="red">*</span></p>
+                    <input type="number" class="form-control " required [(ngModel)]="totalHours">
+                    <small>{{totalHoursError}}</small>
+                </div>
+                  <!-- <div class="formDiv ">
+                    <p>Ending Date and Time</p>
+                    <div class="flex jc ac timeDiv">
+                            <input type="Date" class="form-control " required [(ngModel)]="endDate">
+                            <input type="time" class="form-control " required [(ngModel)]="endTime">
+                    </div>
+                    <small>{{endTimeError}}</small>
+                    <small>{{endDateError}}</small>
+                  </div> --> 
+              
+                  <p class="labelForType">I'm making this contract to </p>
+                  <div class="form-group flex ac radioDiv">
+                      <input name="group"  type="radio" id="radio1" value="1" [(ngModel)]="userType" (change)="userTypeChecker()" [checked]="userType == 1">
+                      <label for="radio100">Get hired</label>
+                  </div>
+                  
+                  <div class="form-group flex ac radioDiv">
+                      <input name="group" type="radio" id="radio2" value="2" [(ngModel)]="userType" (change)="userTypeChecker()" [checked]="userType == 2">
+                      <label for="radio101">Hire</label>
+                  </div>
+                  <div class="formDiv search row" *ngIf="userType == 1">
+                    <p> Service Consumer Phone Number <span class="red">*</span></p>
+                    <div class="flex ac">
+                      <div>
+                        <input type="number"  (keydown)="searchSC($event)" class="form-control " required [(ngModel)]="ServiceConsumerPhone">
+                      </div>
+                      <div class="flex jc ac">
+                        <p (click)="searchSC($event)" class="searchButton success">  <i class="fa fa fa-search"></i></p>
+                      </div>
+                    </div>
+                    <small>{{PhoneNumberSCError}}</small>
+                  </div>
+                  <div class="formDiv search row" *ngIf="userType == 2">
+                      <p>Provider Phone Number <span class="red">*</span></p>
+                      <div class="flex ac">
+                        <div>
+                          <input type="number"  (keydown)="searchSP($event)" class="form-control " required [(ngModel)]="ServiceProviderPhone">
+                        </div>
+                        <div class="flex jc ac">
+                          <p (click)="searchSP($event)" class="searchButton success">  <i class="fa fa fa-search"></i></p>
+                        </div>
+                      </div>
+                      <small>{{PhoneNumberSPError}}</small>
+                    </div>
+                
+                  <div class="formDiv card result" *ngIf="gotUser && (userType == 1)">
+                    <p><span>Name: </span> {{sc.displayName}}</p>
+                    <p><span>Phone: </span> {{sc.phone}}</p>
+                  </div>
+                  <div class="formDiv card result" *ngIf="usernotexist && (userType == 1)">
+                    <p>Opps... We can't find that phone number</p>
+                    <p>You can still go ahead ! We will invite for you :)</p>
+                  </div>
+
+                  <div class="formDiv card result" *ngIf="gotUser && userType == 2">
+                      <p><span>Name: </span> {{sp.displayName}}</p>
+                      <p><span>Phone: </span> {{sp.phone}}</p>
+                    </div>
+                    <div class="formDiv card result" *ngIf="usernotexist && userType == 2">
+                      <p>Opps... We can't find that phone number</p>
+                      <p>You can still go ahead ! We will invite for you :)</p>
+                    </div>
+                  <p class="red userError" *ngIf="userType != 1 && userType !=2 ">Please select one option from the above</p>
+                <button type="button" class="btn btn-outline-success btn-round" [disabled]="disabledButton" (click)="create()">Create</button>
+      </div>
+      </div>
+
+</div>

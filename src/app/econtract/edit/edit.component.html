@@ -1,0 +1,91 @@
+<div class="modal flex jc ac" *ngIf="econtractService.loading">
+  <div class="spinner">
+    <div class="cube1"></div>
+    <div class="cube2"></div>
+  </div>
+</div>
+<div class="modal flex jc ac col wrap" *ngIf="lastStep">
+  <div class="flex col jc ac final">
+      <div class="close flex jc ac" (click)="lastStep = false">
+          <span><</span>
+        </div>
+        <div class="confirm flex wrap">
+            <h1>Editing Contract {{title}}</h1>
+            <h2 ><span class="bold">Service Provider: </span> {{newEcontract.spName}}</h2>
+            <h2 *ngIf="!newEcontract.newAmount"><span class="bold">Amount: </span> {{newEcontract.amount}}</h2>
+            <h2 *ngIf="newEcontract.newAmount"><span class="bold">Updated Amount: </span> {{newEcontract.amount}}</h2>
+            <h2> <span  *ngIf="newEcontract.newStartDate"><span class="bold">Updated: </span> </span><span class="bold">Start Time: </span> {{startDate | date: format}} at <span class="bold" *ngIf="newEcontract.newStartTime">Updated: </span> {{displayStartTime}}</h2>
+            <h2 *ngIf="!newEcontract.newTotalHours"><span class="bold">Total hours: </span> {{totalHours}} hrs</h2>
+            <h2 *ngIf="newEcontract.newTotalHours"><span class="bold">UpdatedTotal hours: </span>{{totalHours}} hrs</h2>
+        </div>
+        <button type="button" class="btn btn-outline-success btn-round" (click)="confirm()">Confirm</button>
+  </div>
+</div>
+<div class="flex jc ac col">
+  <h2>Edit EContract</h2>
+  <div class="row">
+      <div class="col-md-6 col-sm-12">
+              <div class="formDiv">
+                      <p>Work Title</p>
+                      <input type="text" class="form-control " disabled required [(ngModel)]="title" >
+                      <small>{{titleError}}</small>
+                  </div>
+                  <div class="formDiv">
+                      <p>Amount</p>
+                      <input type="number" class="form-control " required [(ngModel)]="amount">
+                      <small>{{amountError}}</small>
+                  </div>
+                  <div class="formDiv ">
+                      <p>Expected Starting Date and Time</p>
+                      <div class="flex jc ac timeDiv">
+                            <input type="Date" class="form-control " required [(ngModel)]="startDate">
+                            <input type="time" class="form-control " required [(ngModel)]="startTime">
+                      </div>
+                      <small>{{startTimeError}}</small>
+                      <small>{{startDateError}}</small>
+                  </div>
+                  <div class="formDiv">
+                    <p>Total Working hours</p>
+                    <input type="number" class="form-control " required [(ngModel)]="totalHours">
+                    <small>{{totalHoursError}}</small>
+                </div>
+                  <!-- <div class="formDiv ">
+                    <p>Ending Date and Time</p>
+                    <div class="flex jc ac timeDiv">
+                            <input type="Date" class="form-control " required [(ngModel)]="endDate">
+                            <input type="time" class="form-control " required [(ngModel)]="endTime">
+                    </div>
+                    <small>{{endTimeError}}</small>
+                    <small>{{endDateError}}</small>
+                  </div> -->
+                  <!-- <div class="formDiv">
+                        <hr>
+                    </div>
+                  <div class="formDiv search row">
+                    <p>Service Consumer Phone Number</p>
+                    <div class="flex  ac">
+                      <div>
+                        <input type="number"  (keydown)="search($event)" class="form-control " required [(ngModel)]="ServiceConsumerPhone">
+                        <small>{{PhoneNumberError}}</small>
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-outline-success btn-round" (click)="search($event)">Find</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="formDiv card result" *ngIf="gotUser">
+                    <p>Name: {{sc.displayName}}</p>
+                    <p>Phone: {{sc.phone}}</p>
+                  </div>
+                  <div class="formDiv card result" *ngIf="usernotexist">
+                    <p>Opps... We can't find that phone number</p>
+                    <p>You can still go ahead ! We will invite for you :)</p>
+                  </div> -->
+                <button type="button" class="btn btn-outline-info btn-round" (click)="create()">Edit</button>
+                <button type="button" class="btn btn-outline-success btn-round" [routerLink]="econtract.backUrl" >Cancel</button>
+                <small>{{changesError}}</small>
+      </div>
+
+  </div>
+
+</div>

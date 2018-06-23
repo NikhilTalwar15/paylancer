@@ -1,0 +1,16 @@
+<div class="flex jc ac widthMax">
+  <h1>Your Notifications</h1>
+</div>
+
+<div class="flex jc ac col widthMax">
+  <div *ngFor="let notification of notifications">
+    <a [routerLink]="'/econtract/'+ notification.cid">
+        <div class="card"  [class.seenNotify]="notification.seen == 0" [class.notSeenNotify]="notification.seen == 1">
+            <h3>{{notification.title}}</h3>
+            <p>{{notification.message}}</p>
+          </div>
+    </a>
+      
+  </div>
+ 
+</div>

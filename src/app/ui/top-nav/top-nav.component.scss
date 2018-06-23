@@ -1,0 +1,95 @@
+nav {
+  border-bottom: 1px solid #E4E4E4;
+  box-shadow: 0 0 4px rgba(0,0,0,.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 60px;
+  padding-bottom: 60px;
+  width: 100%;
+  padding: 0 5vw;
+  padding-left: 5px;
+  padding-right: 60px;
+  position: fixed;
+  background-color: #1CADE4;
+  .nav-item {
+    color: #7a7a7a;
+    font-weight: normal;
+    transition: color 0.3s ease;
+    &:hover {
+      font-color: #1c90f3;
+    }
+  }
+}
+.nav-toggle {
+  left: 50px;
+}
+.backButton {
+  i {
+    font-size: 20px;
+    color: white;
+  }
+  margin-top: 15px;
+  padding-left: 5px; 
+} 
+.logo {
+  color: white;
+  font-size: 20px;
+}
+.nav-toggle span {
+  background-color: white !important;
+}
+.nav-toggle:hover {
+background-color: #1CADE4;
+}
+.headingName {
+  color: white !important;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .colorSet {
+    color: #7a7a7a !important;
+  }
+}
+@media only screen and (min-width: 769px) {
+  .colorSet {
+    color: white !important;
+  }
+}
+.notificationDiv {
+  margin-right: -45px;
+  .notificationCount {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    z-index: 1;
+    margin-bottom: -14px;
+    margin-left: 20px;
+    p {
+      font-size: 12px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .bellIcon {
+    img {
+      height: 30px;
+      width: 30px;
+      z-index: 0;
+    }
+  }
+}
+// newCSS
+.headingNameLogo{
+  color: white !important;
+  /* padding-bottom: 10px; */
+  padding-top: 5px;
+}
+.nav-item img {
+  max-height: 2.5rem !important;
+}
+
+.nav-item {
+  overflow:hidden !important;
+}

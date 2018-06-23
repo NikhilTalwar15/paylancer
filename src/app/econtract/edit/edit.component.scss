@@ -1,0 +1,49 @@
+.formDiv {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    input {
+        width: 100%;
+    }
+}
+.row {
+    width: 100%;
+}
+.timeDiv {
+    input {
+        width: 50%;
+        padding: 10px
+    }
+}
+small {
+    color: red;
+}
+.search {
+   button{
+       margin-left: 20px;
+   }
+}
+.result{
+    padding: 10px;
+    border: 1px solid green;
+}
+.close{
+    height: 50px;
+ width: 50px;
+ border: 1px solid;
+ border-radius: 50%;
+     span {
+         color: black;
+         font-size: 20px;
+     }
+ }
+ .confirm {
+    padding: 10px;
+}
+.bold {
+    font-weight: bold;
+}
+.final {
+    margin-top: -150px;
+}

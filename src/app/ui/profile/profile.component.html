@@ -1,0 +1,30 @@
+<div class="modal flex jc ac" *ngIf="loading">
+    <div class="spinner">
+      <div class="cube1"></div>
+      <div class="cube2"></div>
+    </div>
+  </div>
+<div class="flex jc ac col" >
+  <h1>Setup Your Profile</h1>
+    <div class="profile flex jc sb">
+        <div (click)="setMale()">
+            <img src="../../assets/images/main/boy.svg" class="profileImg {{male ? 'active' : 'inActive'}}">
+        </div>
+        <div (click)="setFemale()">
+            <img src="../../assets/images/main/girl.svg" class="profileImg {{female ? 'active' : 'inActive'}}">
+        </div>
+    </div>
+    <div class="flex col inputHolder maxWidth">
+        <p>Your Name <span>*</span></p>
+        <input type="text" class="form-control "  required [(ngModel)]="displayName" >
+        <small>{{nameError}}</small>
+    
+        <p>Gender <span>*</span></p>
+        <input type="text" class="form-control " disabled required [(ngModel)]="gender" >
+
+        <p>Profession (Optional)</p>
+        <input type="text" class="form-control "  required [(ngModel)]="profession" >
+    </div>
+        
+    <a type="button" class="btn submit btn-success btn-round " (click)="submitDetails()" >Submit</a>
+</div>
